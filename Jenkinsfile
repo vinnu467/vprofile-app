@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'maven3'
+        maven 'maven'
     }
     parameters {
         choice(name: 'DEPLOY_ENV', choices: ['QA', 'Stage', 'Prod'], description: 'Deployment environment')
