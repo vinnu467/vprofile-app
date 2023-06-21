@@ -15,13 +15,13 @@ pipeline {
                     if (params.DEPLOY_ENV == 'QA') {
                         checkout(
                             [$class: 'GitSCM',
-                            branches: [[name: '*/develop']],
+                            branches: [[name: '*/qa']],
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
-                                credentialsId: 'github-creds',
-                                url: 'git@github.com:ravithejajs/vprofile-app-enterprise.git'
+                                credentialsId: 'github',
+                                url: 'git@github.com:vinnu467/vprofile-app.git'
                             ]]
                             ]
                         )
@@ -34,8 +34,8 @@ pipeline {
                             extensions: [],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
-                                credentialsId: 'github-creds',
-                                url: 'git@github.com:ravithejajs/vprofile-app-enterprise.git'
+                                credentialsId: 'github',
+                                url: 'git@github.com:vinnu467/vprofile-app.git'
                             ]]
                             ]
                         )
@@ -75,8 +75,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials: ['ec2-creds']) {
-                   sh  "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP}  'aws s3 cp s3://${S3_BUCKET}/vprofile-${version}-${DEPLOY_ENV}.war ~/'"
+                   sshagent(credentials: ['ec2-creds']) {
+                    sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP}  'aws s3 cp s3://${S3_BUCKET}/vprofile-${version}-${DEPLOY_ENV}.war ~/'"
                     sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} 'sudo mv ~/vprofile-${version}-${DEPLOY_ENV}.war /var/lib/tomcat9/webapps/'"
                     sh "ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} 'sudo systemctl restart tomcat9'"
                 }
