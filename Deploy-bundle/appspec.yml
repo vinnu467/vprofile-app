@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu
+hooks:
+  BeforeInstall:
+    - location: beforeinstall.sh
+    - timeout: 900
+  AfterInstall:
+    - location: afterinstall.sh
+      timeout: 900
+  ApplicationStart:
+    - location: appstart.sh
+      timeout: 900
+  ValidateService:
+    - location: validate.sh
+      timeout: 900
+      
