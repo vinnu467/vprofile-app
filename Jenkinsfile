@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        maven 'maven3'
-    }
     parameters {
         choice(name: 'DEPLOY_ENV', choices: ['QA', 'Stage', 'Prod'], description: 'Deployment environment')
         string(name: 'S3_BUCKET', defaultValue: 'vprofile-', description: 'S3 bucket')
