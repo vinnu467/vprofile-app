@@ -1,8 +1,10 @@
 pipeline {
     agent any
-      parameters {
+    tools {
+        maven 'maven3'
+    }
+    parameters {
         choice(name: 'DEPLOY_ENV', choices: ['QA', 'Stage', 'Prod'], description: 'Deployment environment')
-        string(name: 'SERVER_IP', defaultValue: '3.110.159.232', description: 'Server IP')
         string(name: 'S3_BUCKET', defaultValue: 'vprofile-', description: 'S3 bucket')
     }
     environment {
@@ -73,12 +75,27 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                withAWS(region: 'ap-south-1', credentials: 'aws-creds') {
-                    sh 'aws deploy create-deployment --application-name vprofile --deployment-group-name vprofile-deploy --s3-location bucket=bundle-vprofile,key=Deploy-bundle.zip,bundleType=zip'
-                }
+        stage('Deploy to CodeDeploy') {
+        steps {
+            script {
+            def deploymentGroup
+            switch (params.DEPLOY_ENV) {
+                case 'QA':
+                deploymentGroup = 'Vprofile-App-qa'
+                break
+                case 'Stage':
+                deploymentGroup = 'Vprofile-App-stage'
+                break
+                case 'Prod':
+                deploymentGroup = 'Vprofile-App-production'
+                break
+                default:
+                error('Invalid environment selected')
+            }
+
+            sh "aws deploy create-deployment --application-name  vprofile-application --deployment-group-name ${deploymentGroup} --s3-location bucket=vprofile-bundle,key=deploy-bundle.zip,bundleType=zip"
             }
         }
     }
+   }
 }
