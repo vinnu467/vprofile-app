@@ -12,3 +12,4 @@ if ps aux | grep tomcat | grep -v grep > /dev/null; then
 else
     echo "Tomcat has been stopped."
 fi
+rm -rf /var/lib/tomcat9/webapps/*.war
