@@ -90,7 +90,7 @@ pipeline {
                 error('Invalid environment selected')
             }
 
-            sh "aws deploy create-deployment --application-name  vprofile --deployment-group-name ${deploymentGroup} --s3-location bucket=bundle-vprofile,key=deploy-bundle.zip,bundleType=zip"
+            sh "aws deploy create-deployment --application-name  vprofile --deployment-group-name ${deploymentGroup} --s3-location bucket=bundle-vprofile,key=Deploy-bundle.zip,bundleType=zip"
             }
         }
     }
