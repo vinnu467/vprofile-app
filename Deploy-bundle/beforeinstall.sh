@@ -1,15 +1,12 @@
 #!/bin/bash
 
 # Stop Tomcat
-sudo systemctl stop tomcat9
-
-# Wait for Tomcat to stop
-sleep 5
-
-# Check if Tomcat is still running
-if ps aux | grep tomcat | grep -v grep > /dev/null; then
-    echo "Tomcat is still running."
+echo "Stopping Tomcat..."
+CATALINA_PID=$(pgrep -f "catalina")
+if [ -n "$CATALINA_PID" ]; then
+    kill "$CATALINA_PID"
+    echo "Tomcat stopped successfully."
 else
-    echo "Tomcat has been stopped."
+    echo "Tomcat is already stopped."
 fi
 rm -rf /var/lib/tomcat9/webapps/*.war
