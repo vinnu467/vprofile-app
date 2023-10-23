@@ -19,7 +19,7 @@ pipeline {
                             extensions: [],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
-                                credentialsId: 'github',
+                                credentialsId: 'git',
                                 url: 'git@github.com:vinnu467/vprofile-app.git'
                             ]]
                             ]
@@ -33,7 +33,7 @@ pipeline {
                             extensions: [],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
-                                credentialsId: 'github',
+                                credentialsId: 'git',
                                 url: 'git@github.com:vinnu467/vprofile-app.git'
                             ]]
                             ]
