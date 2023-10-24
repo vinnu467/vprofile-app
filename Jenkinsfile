@@ -88,11 +88,11 @@ pipeline {
                 //break
                 //default:
                 //error('Invalid environment selected')
-            }//
+            //}
 
             //sh "aws deploy create-deployment --application-name  vprofile --deployment-group-name ${deploymentGroup} --s3-location bucket=bundle-vprofile,key=Deploy-bundle.zip,bundleType=zip"
-            }
-        }
-    }
+            //}
+        //}
+    //}
    }
 }
