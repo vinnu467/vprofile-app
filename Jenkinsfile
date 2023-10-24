@@ -72,25 +72,25 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to CodeDeploy') {
-        steps {
-            script {
-            def deploymentGroup
-            switch (params.DEPLOY_ENV) {
-                case 'QA':
-                deploymentGroup = 'Vprofile-App-qa'
-                break
-                case 'Stage':
-                deploymentGroup = 'Vprofile-App-stage'
-                break
-                case 'Prod':
-                deploymentGroup = 'Vprofile-App-production'
-                break
-                default:
-                error('Invalid environment selected')
-            }
+       // stage('Deploy to CodeDeploy') {
+        //steps {
+          //  script {
+            //def deploymentGroup
+            //switch (params.DEPLOY_ENV) {
+              //  case 'QA':
+                //deploymentGroup = 'Vprofile-App-qa'
+                //break
+                //case 'Stage':
+                //deploymentGroup = 'Vprofile-App-stage'
+                //break
+                //case 'Prod':
+                //deploymentGroup = 'Vprofile-App-production'
+                //break
+                //default:
+                //error('Invalid environment selected')
+            }//
 
-            sh "aws deploy create-deployment --application-name  vprofile --deployment-group-name ${deploymentGroup} --s3-location bucket=bundle-vprofile,key=Deploy-bundle.zip,bundleType=zip"
+            //sh "aws deploy create-deployment --application-name  vprofile --deployment-group-name ${deploymentGroup} --s3-location bucket=bundle-vprofile,key=Deploy-bundle.zip,bundleType=zip"
             }
         }
     }
